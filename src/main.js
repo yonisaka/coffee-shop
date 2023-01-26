@@ -3,7 +3,9 @@ import { createPinia } from "pinia";
 
 import App from "./App.vue";
 import router from "./router";
+import axios from "axios";
 import { useMainStore } from "@/stores/main.js";
+// import { useAuthStore } from "@/stores/auth.js";
 import { useStyleStore } from "@/stores/style.js";
 import { darkModeKey, styleKey } from "@/config.js";
 
@@ -12,11 +14,26 @@ import "./css/main.css";
 /* Init Pinia */
 const pinia = createPinia();
 
+/* Set axios base URL */
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:3000/",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${localStorage.token}`,
+  },
+});
+
 /* Create Vue app */
-createApp(App).use(router).use(pinia).mount("#app");
+const app = createApp(App).use(router).use(pinia);
+app.config.globalProperties.$axios = { ...axiosInstance };
+app.config.globalProperties.$user = localStorage.user
+  ? JSON.parse(localStorage.user)
+  : null;
+app.mount("#app");
 
 /* Init Pinia stores */
 const mainStore = useMainStore(pinia);
+// const authStore = useAuthStore(pinia);
 const styleStore = useStyleStore(pinia);
 
 /* Fetch sample data */
@@ -36,7 +53,7 @@ if (
 }
 
 /* Default title tag */
-const defaultDocumentTitle = "Admin One Vue 3 Tailwind";
+const defaultDocumentTitle = "Coffee Shop";
 
 /* Set document title from route meta */
 router.afterEach((to) => {

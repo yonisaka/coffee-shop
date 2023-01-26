@@ -7,15 +7,16 @@ import menuNavBar from "@/menuNavBar.js";
 import { useMainStore } from "@/stores/main.js";
 import { useStyleStore } from "@/stores/style.js";
 import BaseIcon from "@/components/BaseIcon.vue";
-import FormControl from "@/components/FormControl.vue";
+// import FormControl from "@/components/FormControl.vue";
 import NavBar from "@/components/NavBar.vue";
 import NavBarItemPlain from "@/components/NavBarItemPlain.vue";
 import AsideMenu from "@/components/AsideMenu.vue";
 import FooterBar from "@/components/FooterBar.vue";
 
+const user = JSON.parse(localStorage.getItem("user"));
 useMainStore().setUser({
-  name: "John Doe",
-  email: "john@example.com",
+  name: user.username,
+  email: user.email,
   avatar:
     "https://avatars.dicebear.com/api/avataaars/example.svg?options[top][]=shortHair&options[accessoriesChance]=93",
 });
@@ -40,7 +41,8 @@ const menuClick = (event, item) => {
   }
 
   if (item.isLogout) {
-    //
+    localStorage.removeItem("user");
+    router.push({ name: "login" });
   }
 };
 </script>
@@ -79,14 +81,14 @@ const menuClick = (event, item) => {
         >
           <BaseIcon :path="mdiMenu" size="24" />
         </NavBarItemPlain>
-        <NavBarItemPlain use-margin>
+        <!-- <NavBarItemPlain use-margin>
           <FormControl
             placeholder="Search (ctrl+k)"
             ctrl-k-focus
             transparent
             borderless
           />
-        </NavBarItemPlain>
+        </NavBarItemPlain> -->
       </NavBar>
       <AsideMenu
         :is-aside-mobile-expanded="isAsideMobileExpanded"
@@ -108,3 +110,10 @@ const menuClick = (event, item) => {
     </div>
   </div>
 </template>
+<!-- <script>
+export default {
+  mounted() {
+    this.$user = JSON.parse(localStorage.getItem("user"));
+  },
+};
+</script> -->

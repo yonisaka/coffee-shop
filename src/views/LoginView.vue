@@ -1,66 +1,76 @@
 <script setup>
-import { reactive } from "vue";
-import { useRouter } from "vue-router";
 import { mdiAccount, mdiAsterisk } from "@mdi/js";
 import SectionFullScreen from "@/components/SectionFullScreen.vue";
 import CardBox from "@/components/CardBox.vue";
-import FormCheckRadio from "@/components/FormCheckRadio.vue";
 import FormField from "@/components/FormField.vue";
 import FormControl from "@/components/FormControl.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import LayoutGuest from "@/layouts/LayoutGuest.vue";
-
-const form = reactive({
-  login: "john.doe",
-  pass: "highly-secure-password-fYjUw-",
-  remember: true,
-});
-
-const router = useRouter();
-
-const submit = () => {
-  router.push("/dashboard");
-};
 </script>
 
 <template>
   <LayoutGuest>
     <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
       <CardBox :class="cardClass" is-form @submit.prevent="submit">
-        <FormField label="Login" help="Please enter your login">
+        <FormField label="Email" help="Please enter your email">
           <FormControl
-            v-model="form.login"
+            v-model="form.email"
             :icon="mdiAccount"
-            name="login"
-            autocomplete="username"
+            name="email"
+            autocomplete="email"
+            placeholder="Email"
           />
         </FormField>
 
         <FormField label="Password" help="Please enter your password">
           <FormControl
-            v-model="form.pass"
+            v-model="form.password"
             :icon="mdiAsterisk"
             type="password"
             name="password"
             autocomplete="current-password"
+            placeholder="Password"
           />
         </FormField>
-
-        <FormCheckRadio
-          v-model="form.remember"
-          name="remember"
-          label="Remember"
-          :input-value="true"
-        />
 
         <template #footer>
           <BaseButtons>
             <BaseButton type="submit" color="info" label="Login" />
-            <BaseButton to="/dashboard" color="info" outline label="Back" />
           </BaseButtons>
         </template>
       </CardBox>
     </SectionFullScreen>
   </LayoutGuest>
 </template>
+
+<script>
+import { useAuthStore } from "@/stores/auth.js";
+export default {
+  data() {
+    return {
+      form: {
+        email: "lacrose@gmail.com",
+        password: "password",
+      },
+      auth: useAuthStore(),
+    };
+  },
+  methods: {
+    submit() {
+      this.$axios
+        .post("/auth/login", this.form)
+        .then((response) => {
+          this.auth.setToken(response.data.access_token);
+          this.auth.setUser(response.data.user);
+
+          // this.$router.push("/coffee");
+          window.location.href = "/";
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+};
+</script>

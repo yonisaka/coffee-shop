@@ -54,7 +54,10 @@ const menuClick = (event) => {
       :href="item.href ?? null"
       :target="item.target ?? null"
       class="flex cursor-pointer"
-      :class="componentClass"
+      :class="[
+        componentClass,
+        { hidden: item.to == '/order' && $user.role != 'staff' },
+      ]"
       @click="menuClick"
     >
       <BaseIcon
