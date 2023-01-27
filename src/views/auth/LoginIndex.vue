@@ -13,6 +13,7 @@ import LayoutGuest from "@/layouts/LayoutGuest.vue";
   <LayoutGuest>
     <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
       <CardBox :class="cardClass" is-form @submit.prevent="submit">
+        <h4 class="text-2xl font-bold my-3 mb-5">Ngops, Welcome Back!</h4>
         <FormField label="Email" help="Please enter your email">
           <FormControl
             v-model="form.email"
