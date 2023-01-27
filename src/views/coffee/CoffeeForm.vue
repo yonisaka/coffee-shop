@@ -32,20 +32,24 @@ import NotificationBar from "@/components/NotificationBar.vue";
       </SectionTitleLineWithButton>
       <NotificationBar
         v-if="notification.show"
-        color="info"
+        :color="notification.color"
         :icon="mdiAlertCircle"
       >
         {{ notification.messages }}
       </NotificationBar>
       <CardBox is-form @submit.prevent="submit">
-        <FormField label="Name">
-          <FormControl v-model="form.name" placeholder="Coffee Name" />
-          <FormControl
-            v-model="form.price"
-            type="number"
-            placeholder="Price "
-          />
-        </FormField>
+        <div class="grid grid-cols-2 gap-3">
+          <FormField label="Name *">
+            <FormControl v-model="form.name" placeholder="Coffee Name" />
+          </FormField>
+          <FormField label="Price *">
+            <FormControl
+              v-model="form.price"
+              type="number"
+              placeholder="Price "
+            />
+          </FormField>
+        </div>
 
         <FormField label="File">
           <FormFilePicker
@@ -57,7 +61,7 @@ import NotificationBar from "@/components/NotificationBar.vue";
         <BaseDivider />
 
         <FormField
-          label="Description"
+          label="Description *"
           help="Your Description. Max 255 characters"
         >
           <FormControl
@@ -121,13 +125,27 @@ export default {
           .put(`/api/coffee/${this.$route.params.id}`, this.form)
           .then((response) => {
             this.notification.messages = response.data.messages;
+            this.notification.color = "info";
+            this.notification.show = true;
+          })
+          .catch((error) => {
+            this.notification.messages = error.response.data.messages;
+            this.notification.color = "danger";
             this.notification.show = true;
           });
       } else {
-        this.$axios.post("/api/coffee", this.form).then((response) => {
-          this.notification.messages = response.data.messages;
-          this.notification.show = true;
-        });
+        this.$axios
+          .post("/api/coffee", this.form)
+          .then((response) => {
+            this.notification.messages = response.data.messages;
+            this.notification.color = "info";
+            this.notification.show = true;
+          })
+          .catch((error) => {
+            this.notification.messages = error.response.data.messages;
+            this.notification.color = "danger";
+            this.notification.show = true;
+          });
       }
     },
     destroy() {

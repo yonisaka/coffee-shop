@@ -11,9 +11,9 @@ import { mdiCheckCircle } from "@mdi/js";
   <LayoutAuthenticated>
     <SectionMain>
       <div class="flex flex-col justify-between">
-        <h1 v-if="orders.length < 1" class="text-2xl font-bold">
-          Order Kosong
-        </h1>
+        <h3 v-if="orders.length < 1" class="text-2xl font-bold">
+          Order Not Found
+        </h3>
         <CardBox
           v-for="(order, i) in orders"
           v-else

@@ -62,12 +62,20 @@ import CardBoxModal from "@/components/CardBoxModal.vue";
       </div>
       <CardBoxModal
         v-model="modalOrder"
-        title="Please confirm action"
+        title="Please Confirm Order"
         button-label="Confirm"
         has-cancel
         @confirm="orderCoffee(coffee)"
+        @cancel="modalOrder = false"
       >
-        <p>Order this coffee?</p>
+        <p>Order this {{ coffee.name }}?</p>
+        <img
+          :src="coffee.image"
+          :alt="coffee.name"
+          class="w-full rounded-lg h-72"
+        />
+        <h6>Description :</h6>
+        <small>{{ coffee.description }}</small>
       </CardBoxModal>
     </SectionMain>
   </LayoutAuthenticated>

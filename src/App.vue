@@ -27,7 +27,7 @@ export default {
           error.config &&
           !error.config.__isRetryRequest
         ) {
-          this.$router.push({ name: "Login" });
+          this.$router.push("/login");
         }
         throw error;
       });

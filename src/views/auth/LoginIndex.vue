@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       form: {
-        email: "lacrose@gmail.com",
+        email: "staff@gmail.com",
         password: "password",
       },
       auth: useAuthStore(),
@@ -64,7 +64,6 @@ export default {
           this.auth.setToken(response.data.access_token);
           this.auth.setUser(response.data.user);
 
-          // this.$router.push("/coffee");
           window.location.href = "/";
         })
         .catch((error) => {

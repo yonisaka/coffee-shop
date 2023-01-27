@@ -1,30 +1,12 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 // import Style from "@/views/StyleView.vue";
-import Home from "@/views/HomeView.vue";
+// import Home from "@/views/HomeView.vue";
 import auth from "@/middleware/auth.js";
 
 const routes = [
-  // {
-  //   meta: {
-  //     title: "Select style",
-  //   },
-  //   path: "/",
-  //   name: "style",
-  //   component: Style,
-  // },
   {
     path: "/",
     redirect: "/coffee",
-  },
-  {
-    // Document title tag
-    // We combine it with defaultDocumentTitle set in `src/main.js` on router.afterEach hook
-    meta: {
-      title: "Dashboard",
-    },
-    path: "/dashboard",
-    name: "dashboard",
-    component: Home,
   },
   {
     path: "/coffee",
@@ -55,43 +37,12 @@ const routes = [
   },
   {
     meta: {
-      title: "Tables",
-    },
-    path: "/tables",
-    name: "tables",
-    component: () => import("@/views/TablesView.vue"),
-  },
-  {
-    meta: {
-      title: "Forms",
-    },
-    path: "/forms",
-    name: "forms",
-    component: () => import("@/views/FormsView.vue"),
-  },
-  {
-    meta: {
       title: "Profile",
+      middleware: auth,
     },
     path: "/profile",
     name: "profile",
-    component: () => import("@/views/ProfileView.vue"),
-  },
-  {
-    meta: {
-      title: "Ui",
-    },
-    path: "/ui",
-    name: "ui",
-    component: () => import("@/views/UiView.vue"),
-  },
-  {
-    meta: {
-      title: "Responsive layout",
-    },
-    path: "/responsive",
-    name: "responsive",
-    component: () => import("@/views/ResponsiveView.vue"),
+    component: () => import("@/views/profile/ProfileIndex.vue"),
   },
   {
     meta: {
@@ -99,15 +50,7 @@ const routes = [
     },
     path: "/login",
     name: "login",
-    component: () => import("@/views/LoginView.vue"),
-  },
-  {
-    meta: {
-      title: "Error",
-    },
-    path: "/error",
-    name: "error",
-    component: () => import("@/views/ErrorView.vue"),
+    component: () => import("@/views/auth/LoginIndex.vue"),
   },
 ];
 
