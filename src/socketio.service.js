@@ -6,10 +6,6 @@ class SocketioService {
 
   setupSocketConnection() {
     this.socket = io("http://localhost:3000");
-
-    // this.socket.on("order", (data) => {
-    //   console.log("order", data);
-    // });
   }
 
   disconnect() {

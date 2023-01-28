@@ -104,6 +104,7 @@ export default {
     },
     getNotification() {
       this.socket.on(`receive-${this.$user.id}`, (data) => {
+        console.log("receive: ", data);
         this.notification = data;
       });
     },

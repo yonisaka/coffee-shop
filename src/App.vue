@@ -1,15 +1,6 @@
 <script setup>
-// import { toRaw } from "vue";
 import { RouterView } from "vue-router";
 import SocketioService from "./socketio.service.js";
-// import { storeToRefs } from "pinia";
-// import { useAuthStore } from "@/stores/auth";
-
-// const { user } = storeToRefs(useAuthStore());
-// const authStore = useAuthStore();
-// const user = computed(() => authStore.user);
-
-// console.log(toRaw(authStore.user));
 </script>
 
 <template>

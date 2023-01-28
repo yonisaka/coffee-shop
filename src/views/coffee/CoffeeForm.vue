@@ -51,7 +51,7 @@ import NotificationBar from "@/components/NotificationBar.vue";
           </FormField>
         </div>
 
-        <FormField label="File">
+        <FormField label="Image" help="Your Images File. Max 2048kb">
           <FormFilePicker
             accept="image/*"
             label="Upload"
